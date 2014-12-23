@@ -11,6 +11,15 @@ Page {
 
     BridgeLoader {
         id: bridgeLoader
+        onLoadBridgesError: messageLabel.text = "error"
+        onLoadBridgesFinished: messageLabel.text = "finished"
+    }
+
+    Label {
+        id: messageLabel
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: parent.top
     }
 
     SilicaListView {
@@ -72,7 +81,7 @@ Page {
             }
             Label {
                 x: Theme.paddingLarge
-                text: (model.index+1) + ". " + model.text
+                text: model.id + " " + model.text
                 anchors.verticalCenter: parent.verticalCenter
                 font.capitalization: Font.Capitalize
                 color: listItem.highlighted ? Theme.highlightColor : Theme.primaryColor

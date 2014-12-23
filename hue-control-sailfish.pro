@@ -14,6 +14,8 @@ TARGET = hue-control-sailfish
 
 CONFIG += sailfishapp
 
+QT += network
+
 SOURCES += src/hue-control-sailfish.cpp \
     src/bridgeloader.cpp
 

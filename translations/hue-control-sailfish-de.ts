@@ -5,7 +5,11 @@
     <name>CoverPage</name>
     <message>
         <source>My Cover</source>
-        <translation>Mein Cover</translation>
+        <translation type="obsolete">Mein Cover</translation>
+    </message>
+    <message>
+        <source>Lights</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
