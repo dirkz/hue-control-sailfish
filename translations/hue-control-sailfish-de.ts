@@ -72,5 +72,9 @@
         <source>Clear All</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Load Bridges</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

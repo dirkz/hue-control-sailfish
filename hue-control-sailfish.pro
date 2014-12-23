@@ -14,7 +14,8 @@ TARGET = hue-control-sailfish
 
 CONFIG += sailfishapp
 
-SOURCES += src/hue-control-sailfish.cpp
+SOURCES += src/hue-control-sailfish.cpp \
+    src/bridgeloader.cpp
 
 OTHER_FILES += qml/hue-control-sailfish.qml \
     qml/cover/CoverPage.qml \
@@ -31,4 +32,7 @@ OTHER_FILES += qml/hue-control-sailfish.qml \
 # following CONFIG line
 CONFIG += sailfishapp_i18n
 TRANSLATIONS += translations/hue-control-sailfish-de.ts
+
+HEADERS += \
+    src/bridgeloader.h
 
