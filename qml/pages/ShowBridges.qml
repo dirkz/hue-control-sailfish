@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import BridgeLoader 1.0
+import BridgeModel 1.0
 
 Page {
     id: showBridges
@@ -9,10 +10,23 @@ Page {
         id: clearRemorse
     }
 
+    BridgeModel {
+        id: bridgeModel
+    }
+
     BridgeLoader {
         id: bridgeLoader
-        onLoadBridgesError: messageLabel.text = "error"
-        onLoadBridgesFinished: messageLabel.text = "finished"
+        bridgeModel: bridgeModel
+        onLoadBridgesError: messageLabel.text = errorMessage
+        onLoadBridgesFinished: {
+            messageLabel.text = jsonString
+            console.log("bridges " + bridges)
+            console.log("bridges.toJsonDocument().isArray() " + bridges.toJsonDocument().isArray())
+            for (var i = 0; i < bridges.array().count(); ++i) {
+                var value = bridges.at(i)
+                console.log("bridge " + bridges)
+            }
+        }
     }
 
     Label {
@@ -20,13 +34,16 @@ Page {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: parent.top
+        anchors.horizontalCenter: parent.Center
+        anchors.leftMargin: Theme.paddingSmall
+        anchors.rightMargin: Theme.paddingSmall
     }
 
     SilicaListView {
 
         id: listViewBridges
         anchors.fill: parent
-        model: listModel
+        model: bridgeModel
 
         header: PageHeader { title: qsTr("Bridges") }
 
@@ -50,7 +67,7 @@ Page {
             }
             MenuItem {
                 text: qsTr("Load Bridges")
-                onClicked: bridgeLoader.loadBridges()
+                onClicked: bridgeLoader.loadBridges(bridgeModel)
             }
             MenuLabel {
                 text: qsTr("Bridges")
@@ -70,15 +87,19 @@ Page {
         delegate: ListItem {
             id: listItem
             menu: contextMenuComponent
+
             function remove() {
                 remorseAction("Deleting", function() { listModel.remove(index) })
             }
+
             ListView.onRemove: animateRemoval()
+
             onClicked: {
                 if (pageStack.depth == 2) {
                     pageStack.push(Qt.resolvedUrl("MenuPage.qml"))
                 }
             }
+
             Label {
                 x: Theme.paddingLarge
                 text: model.id + " " + model.text

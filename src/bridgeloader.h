@@ -5,26 +5,34 @@
 #include <QNetworkSession>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QJsonDocument>
+
+#include "bridgemodel.h"
 
 class BridgeLoader : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(BridgeModel *bridgeModel READ bridgeModel WRITE setBridgeModel)
+
 public:
     explicit BridgeLoader(QObject *parent = 0);
+    Q_INVOKABLE void loadBridges();
+    BridgeModel *bridgeModel() const;
+    void setBridgeModel(BridgeModel *model);
 
 signals:
-    void loadBridgesError(QString msg);
-    void loadBridgesFinished(QString msg);
+    void loadBridgesError(const QString& errorMessage);
+    void loadBridgesFinished(const QJsonDocument& bridges, const QString& jsonString);
 
 public slots:
-    void loadBridges();
 
 private:
     QNetworkSession *m_networkSession;
     QNetworkAccessManager *m_networkAccessManager;
+    BridgeModel *m_bridgeModel;
 
     bool openNetworkConnection();
-    QNetworkAccessManager *getNetworkAccessManager();
+    QNetworkAccessManager *networkAccessManager();
 
 private slots:
     void loadBridgesRequestFinished(QNetworkReply *);

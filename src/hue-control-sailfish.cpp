@@ -33,7 +33,9 @@
 #endif
 
 #include <sailfishapp.h>
+
 #include "bridgeloader.h"
+#include "bridgemodel.h"
 
 int main(int argc, char *argv[])
 {
@@ -50,6 +52,7 @@ int main(int argc, char *argv[])
     QQuickView *view = SailfishApp::createView();
 
     qmlRegisterType<BridgeLoader>("BridgeLoader", 1, 0, "BridgeLoader");
+    qmlRegisterType<BridgeModel>("BridgeModel", 1, 0, "BridgeModel");
 
     view->setSource(SailfishApp::pathTo("qml/hue-control-sailfish.qml"));
     view->showFullScreen();

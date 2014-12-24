@@ -14,6 +14,16 @@ BridgeLoader::BridgeLoader(QObject *parent) :
 {
 }
 
+BridgeModel *BridgeLoader::bridgeModel() const
+{
+    return m_bridgeModel;
+}
+
+void BridgeLoader::setBridgeModel(BridgeModel *model)
+{
+    m_bridgeModel = model;
+}
+
 bool BridgeLoader::openNetworkConnection()
 {
     if (m_networkSession == NULL) {
@@ -33,7 +43,7 @@ bool BridgeLoader::openNetworkConnection()
     }
 }
 
-QNetworkAccessManager *BridgeLoader::getNetworkAccessManager()
+QNetworkAccessManager *BridgeLoader::networkAccessManager()
 {
     if (m_networkAccessManager == NULL) {
         m_networkAccessManager = new QNetworkAccessManager(this);
@@ -46,7 +56,7 @@ void BridgeLoader::loadBridges()
 {
     qDebug("loadBridges()");
     openNetworkConnection();
-    getNetworkAccessManager()->get(QNetworkRequest(QUrl(HUE_GET_BRIDGES_URL)));
+    networkAccessManager()->get(QNetworkRequest(QUrl(HUE_GET_BRIDGES_URL)));
 }
 
 void BridgeLoader::loadBridgesRequestFinished(QNetworkReply *reply)
@@ -56,7 +66,7 @@ void BridgeLoader::loadBridgesRequestFinished(QNetworkReply *reply)
         QByteArray bytes = reply->readAll();
         QString result = QString(bytes);
         qDebug("bridges: %s", qPrintable(result));
-        emit loadBridgesFinished(result);
+        emit loadBridgesFinished(QJsonDocument::fromBinaryData(bytes), result);
     } else {
         qDebug("error: %s", qPrintable(reply->errorString()));
         QString errorString = reply->errorString();
