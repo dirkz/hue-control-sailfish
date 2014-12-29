@@ -101,11 +101,11 @@ Page {
             }
 
             Label {
-                x: Theme.paddingLarge
-                text: model.id + " " + model.text
-                anchors.verticalCenter: parent.verticalCenter
-                font.capitalization: Font.Capitalize
                 color: listItem.highlighted ? Theme.highlightColor : Theme.primaryColor
+                x: Theme.paddingLarge
+                anchors.verticalCenter: parent.verticalCenter
+                text: model.ip + " (" + model.name + ")<br>" +
+                model.bridgeId + " " + model.mac
             }
 
             Component {

@@ -3,11 +3,13 @@
 
 #include <QAbstractListModel>
 #include <QStringList>
+#include <QJsonObject>
 
 class Bridge
 {
 public:
-    Bridge(const QString &bridgeId, const QString &ip, const QString &mac, const QString &name);
+    Bridge(const QString& bridgeId, const QString& ip, const QString& mac, const QString& name);
+    Bridge(const QJsonObject& jsonObject);
 
     QString bridgeId() const;
     QString ip() const;
@@ -38,7 +40,6 @@ public:
     QHash<int, QByteArray> roleNames() const;
     int rowCount(const QModelIndex & parent) const;
     QVariant data(const QModelIndex & index, int role) const;
-
 signals:
 
 public slots:

@@ -4,6 +4,10 @@
 #include <QNetworkRequest>
 #include <QNetworkAccessManager>
 #include <QByteArray>
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QDebug>
 
 #include "bridgeloader.h"
 
@@ -31,7 +35,7 @@ bool BridgeLoader::openNetworkConnection()
         const bool canStartIAP = (manager.capabilities() & QNetworkConfigurationManager::CanStartAndStopInterfaces);
         QNetworkConfiguration cfg = manager.defaultConfiguration();
         if (!cfg.isValid() || (!canStartIAP && cfg.state() != QNetworkConfiguration::Active)) {
-            emit loadBridgesError("no access point found");
+            emit loadBridgesError(tr("no access point found"));
             qDebug("no access point found");
             return false;
         }
@@ -64,16 +68,33 @@ void BridgeLoader::loadBridgesRequestFinished(QNetworkReply *reply)
     qDebug("loadBridgesFinished()");
     if (reply->error() == QNetworkReply::NoError) {
         QByteArray bytes = reply->readAll();
-        QString result = QString(bytes);
-        qDebug("bridges: %s", qPrintable(result));
-        emit loadBridgesFinished(QJsonDocument::fromBinaryData(bytes), result);
+        QJsonParseError *parseError = NULL;
+        QJsonDocument jsonDocument = QJsonDocument::fromJson(bytes, parseError);
+        if (parseError != NULL) {
+            emit loadBridgesError(parseError->errorString());
+        } else {
+            if (jsonDocument.isArray()) {
+                QJsonArray jsonArray = jsonDocument.array();
+                foreach (const QJsonValue& jsonBridge, jsonArray) {
+                    qDebug() << "bridge" << jsonBridge;
+                    if (jsonBridge.isObject()) {
+                        Bridge bridge(jsonBridge.toObject());
+                        bridgeModel()->addBridge(bridge);
+                    } else {
+                        emit loadBridgesError(tr("invalid bridge format received"));
+                    }
+                }
+            } else {
+                emit loadBridgesError(tr("no bridge array found"));
+            }
+        }
     } else {
         qDebug("error: %s", qPrintable(reply->errorString()));
         QString errorString = reply->errorString();
-        if (errorString != "") {
+        if (!errorString.isEmpty()) {
             emit loadBridgesError(reply->errorString());
         } else {
-            emit loadBridgesError("unknown error");
+            emit loadBridgesError(tr("unknown error when loading bridges"));
         }
     }
 }

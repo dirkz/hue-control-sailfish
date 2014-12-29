@@ -2,8 +2,21 @@
 
 #include "bridgemodel.h"
 
-Bridge::Bridge(const QString &bridgeId, const QString &ip, const QString &mac, const QString &name) :
+const static QString KEY_JSON_BRIDGE_ID = "id";
+const static QString KEY_JSON_BRIDGE_IP = "internalipaddress";
+const static QString KEY_JSON_BRIDGE_MAC = "macaddress";
+const static QString KEY_JSON_BRIDGE_NAME = "name";
+
+Bridge::Bridge(const QString& bridgeId, const QString& ip, const QString& mac, const QString& name) :
     m_bridgeId(bridgeId), m_ip(ip), m_mac(mac), m_name(name)
+{
+}
+
+Bridge::Bridge(const QJsonObject& jsonObject) :
+    m_bridgeId(jsonObject.value(KEY_JSON_BRIDGE_ID).toString()),
+    m_ip(jsonObject.value(KEY_JSON_BRIDGE_IP).toString()),
+    m_mac(jsonObject.value(KEY_JSON_BRIDGE_MAC).toString()),
+    m_name(jsonObject.value(KEY_JSON_BRIDGE_NAME).toString())
 {
 }
 
@@ -42,7 +55,6 @@ QHash<int, QByteArray> BridgeModel::roleNames() const
     return roles;
 }
 
-
 void BridgeModel::addBridge(const Bridge &bridge)
 {
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
@@ -51,7 +63,7 @@ void BridgeModel::addBridge(const Bridge &bridge)
 }
 
 int BridgeModel::rowCount(const QModelIndex & parent) const {
-    return m_bridges.count();
+    return rowCount();
 }
 
 QVariant BridgeModel::data(const QModelIndex & index, int role) const {

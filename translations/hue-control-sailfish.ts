@@ -2,6 +2,25 @@
 <!DOCTYPE TS>
 <TS version="2.0">
 <context>
+    <name>BridgeLoader</name>
+    <message>
+        <source>no access point found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no bridge array found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unknown error when loading bridges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>invalid bridge format received</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CoverPage</name>
     <message>
         <source>Lights</source>
