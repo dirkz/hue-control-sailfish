@@ -20,12 +20,8 @@ Page {
         onLoadBridgesError: messageLabel.text = errorMessage
         onLoadBridgesFinished: {
             messageLabel.text = jsonString
+            console.log("bridges " + jsonString)
             console.log("bridges " + bridges)
-            console.log("bridges.toJsonDocument().isArray() " + bridges.toJsonDocument().isArray())
-            for (var i = 0; i < bridges.array().count(); ++i) {
-                var value = bridges.at(i)
-                console.log("bridge " + bridges)
-            }
         }
     }
 
@@ -63,7 +59,7 @@ Page {
             MenuItem {
                 text: qsTr("Clear All")
                 visible: listViewBridges.count > 0
-                onClicked: clearRemorse.execute(qsTr("Clearing Bridges"), function() { listModel.clear() } )
+                onClicked: clearRemorse.execute(qsTr("Clearing Bridges"), function() { bridgeModel.clearAll() }, 2)
             }
             MenuItem {
                 text: qsTr("Load Bridges")
@@ -89,7 +85,7 @@ Page {
             menu: contextMenuComponent
 
             function remove() {
-                remorseAction("Deleting", function() { listModel.remove(index) })
+                remorseAction("Deleting", function() { bridgeModel.remove(index) }, 2)
             }
 
             ListView.onRemove: animateRemoval()
@@ -118,10 +114,6 @@ Page {
                 }
             }
         }
-    }
-
-    ListModel {
-        id: listModel
     }
 }
 

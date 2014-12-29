@@ -63,6 +63,7 @@ void BridgeModel::addBridge(const Bridge &bridge)
 }
 
 int BridgeModel::rowCount(const QModelIndex & parent) const {
+    Q_UNUSED(parent)
     return rowCount();
 }
 
@@ -88,4 +89,28 @@ QVariant BridgeModel::data(const QModelIndex & index, int role) const {
 int BridgeModel::rowCount() const
 {
     return m_bridges.count();
+}
+
+bool BridgeModel::removeRows(int row, int count, const QModelIndex & parent)
+{
+    if (count > 0) {
+        beginRemoveRows(parent, row, row + count - 1);
+        for (int i = 0; i < count; ++i) {
+            m_bridges.removeAt(row);
+        }
+        endRemoveRows();
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool BridgeModel::remove(int row)
+{
+    return removeRow(row);
+}
+
+bool BridgeModel::clearAll()
+{
+    return removeRows(0, m_bridges.count());
 }

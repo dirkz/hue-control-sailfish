@@ -40,6 +40,9 @@ public:
     QHash<int, QByteArray> roleNames() const;
     int rowCount(const QModelIndex & parent) const;
     QVariant data(const QModelIndex & index, int role) const;
+    bool removeRows(int row, int count, const QModelIndex & parent = QModelIndex());
+    Q_INVOKABLE bool remove(int row);
+    Q_INVOKABLE bool clearAll();
 signals:
 
 public slots:

@@ -36,7 +36,6 @@ bool BridgeLoader::openNetworkConnection()
         QNetworkConfiguration cfg = manager.defaultConfiguration();
         if (!cfg.isValid() || (!canStartIAP && cfg.state() != QNetworkConfiguration::Active)) {
             emit loadBridgesError(tr("no access point found"));
-            qDebug("no access point found");
             return false;
         }
         m_networkSession = new QNetworkSession(cfg, this);
@@ -58,14 +57,12 @@ QNetworkAccessManager *BridgeLoader::networkAccessManager()
 
 void BridgeLoader::loadBridges()
 {
-    qDebug("loadBridges()");
     openNetworkConnection();
     networkAccessManager()->get(QNetworkRequest(QUrl(HUE_GET_BRIDGES_URL)));
 }
 
 void BridgeLoader::loadBridgesRequestFinished(QNetworkReply *reply)
 {
-    qDebug("loadBridgesFinished()");
     if (reply->error() == QNetworkReply::NoError) {
         QByteArray bytes = reply->readAll();
         QJsonParseError *parseError = NULL;
@@ -76,7 +73,6 @@ void BridgeLoader::loadBridgesRequestFinished(QNetworkReply *reply)
             if (jsonDocument.isArray()) {
                 QJsonArray jsonArray = jsonDocument.array();
                 foreach (const QJsonValue& jsonBridge, jsonArray) {
-                    qDebug() << "bridge" << jsonBridge;
                     if (jsonBridge.isObject()) {
                         Bridge bridge(jsonBridge.toObject());
                         bridgeModel()->addBridge(bridge);
