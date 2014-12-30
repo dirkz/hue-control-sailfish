@@ -30,7 +30,11 @@ def username():
 
 def extract_error(json):
     if isinstance(json, collections.Sequence) and len(json) == 1:
-        return json[0]['error']['description']
+        potential_error = json[0].get('error', None)
+        if potential_error == None:
+            return None
+        else:
+            return potential_error['description']
     else:
         return None
 

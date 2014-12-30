@@ -14,7 +14,6 @@ Page {
         }
 
         anchors.fill: parent
-        contentHeight: column.height
 
         Column {
             id: columnContents
@@ -72,8 +71,15 @@ Page {
             onRegisterBridge: {
                 console.log("onRegisterBridge")
                 py.call('bridgemodel.register_bridge', [bridge.internalipaddress], function(successful) {
-
+                    updateRegisteredLabel(successful)
+                    if (successful) {
+                        messageLabel.text = ""
+                    }
                 })
+            }
+
+            function updateRegisteredLabel(success) {
+                isRegisteredLabel.text = success ? qsTr("Registered") : qsTr("Not Registered")
             }
 
             Component.onCompleted: {
@@ -84,7 +90,7 @@ Page {
 
                 importModule('bridgemodel', function() {
                     py.call('bridgemodel.is_bridge_registered', [bridge.internalipaddress], function(isRegistered) {
-                        isRegisteredLabel.text = isRegistered ? qsTr("Registered") : qsTr("Not Registered")
+                        updateRegisteredLabel(isRegistered)
                     })
                 })
             }
