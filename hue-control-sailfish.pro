@@ -16,33 +16,22 @@ CONFIG += sailfishapp
 
 QT += sql
 
-SOURCES += src/hue-control-sailfish.cpp \
-    src/bridgeloader.cpp \
-    src/bridgemodel.cpp \
-    src/dbhelper.cpp \
-    src/dbdescription.cpp \
-    src/dbcolumn.cpp
+SOURCES +=
 
 OTHER_FILES += qml/hue-control-sailfish.qml \
     qml/cover/CoverPage.qml \
-    qml/pages/FirstPage.qml \
-    qml/pages/SecondPage.qml \
     rpm/hue-control-sailfish.changes.in \
     rpm/hue-control-sailfish.spec \
     rpm/hue-control-sailfish.yaml \
     translations/*.ts \
     hue-control-sailfish.desktop \
-    qml/pages/ShowBridges.qml
+    qml/pages/ShowBridges.qml \
+    qml/pages/bridgemodel.py
 
 # to disable building translations every time, comment out the
 # following CONFIG line
 CONFIG += sailfishapp_i18n
 TRANSLATIONS += translations/hue-control-sailfish-de.ts
 
-HEADERS += \
-    src/bridgeloader.h \
-    src/bridgemodel.h \
-    src/dbhelper.h \
-    src/dbdescription.h \
-    src/dbcolumn.h
+HEADERS +=
 
