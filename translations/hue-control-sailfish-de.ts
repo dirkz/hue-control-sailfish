@@ -2,6 +2,29 @@
 <!DOCTYPE TS>
 <TS version="2.0">
 <context>
+    <name>BridgeInfo</name>
+    <message>
+        <source>Register</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bridge Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Registered: Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Registered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not Registered</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CoverPage</name>
     <message>
         <source>My Cover</source>
@@ -45,15 +68,7 @@
         <translation type="obsolete">Hallo Matrosen</translation>
     </message>
     <message>
-        <source>Jump to the end</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Fetch Bridges</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Return to Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

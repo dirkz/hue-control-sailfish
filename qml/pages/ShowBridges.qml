@@ -45,31 +45,17 @@ Page {
                 color: listItem.highlighted ? Theme.highlightColor : Theme.primaryColor
                 x: Theme.paddingLarge
                 anchors.verticalCenter: parent.verticalCenter
-                text: model.name + " (" + encloseTag("b", model.internalipaddress) +
-                      ")"
+                text: model.name + " (" + encloseTag("b", model.internalipaddress) + ")"
             }
+            onClicked: pageStack.push(Qt.resolvedUrl("BridgeInfo.qml"), { bridge: model })
         }
 
         PullDownMenu {
             id: pullDownMenu
             MenuItem {
-                text: qsTr("Jump to the end")
-                visible: listView.count > 0
-                onClicked: listView.scrollToBottom()
-            }
-            MenuItem {
                 text: qsTr("Fetch Bridges")
                 onClicked: py.fetchBridges();
 
-            }
-        }
-        PushUpMenu {
-            id: pushUpMenu
-            spacing: Theme.paddingLarge
-            MenuItem {
-                text: qsTr("Return to Top")
-                onClicked: listView.scrollToTop()
-                visible: listView.count > 0
             }
         }
     }
