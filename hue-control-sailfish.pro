@@ -18,7 +18,10 @@ QT += sql
 
 SOURCES += src/hue-control-sailfish.cpp \
     src/bridgeloader.cpp \
-    src/bridgemodel.cpp
+    src/bridgemodel.cpp \
+    src/dbhelper.cpp \
+    src/dbdescription.cpp \
+    src/dbcolumn.cpp
 
 OTHER_FILES += qml/hue-control-sailfish.qml \
     qml/cover/CoverPage.qml \
@@ -38,5 +41,8 @@ TRANSLATIONS += translations/hue-control-sailfish-de.ts
 
 HEADERS += \
     src/bridgeloader.h \
-    src/bridgemodel.h
+    src/bridgemodel.h \
+    src/dbhelper.h \
+    src/dbdescription.h \
+    src/dbcolumn.h
 
