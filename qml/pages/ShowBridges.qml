@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import SqlBridgeModel 1.0
+import io.thp.pyotherside 1.3
 
 Page {
     id: showBridges
@@ -11,11 +11,6 @@ Page {
 
     function lineBreak() {
         return "<br>"
-    }
-
-    SqlBridgeModel {
-        id: bridgeModel
-        Component.onCompleted: initialise()
     }
 
     Label {
@@ -32,7 +27,9 @@ Page {
         id: listView
         anchors.fill: parent
 
-        model: bridgeModel
+        model: ListModel {
+            id: listModel
+        }
 
         header: PageHeader { title: qsTr("Bridges") }
 
@@ -57,42 +54,42 @@ Page {
             id: pullDownMenu
             MenuItem {
                 text: qsTr("Fetch Bridges")
-//                onClicked: py.fetchBridges();
+                onClicked: py.fetchBridges();
 
             }
         }
     }
 
-//    Python {
-//        id: py
+    Python {
+        id: py
 
-//        signal fetchBridges
-//        signal bridgesFetched(variant bridges)
+        signal fetchBridges
+        signal bridgesFetched(variant bridges)
 
-//        onError: {
-//            console.log('Error: ' + traceback)
-//            messageLabel.text = "py error: " + traceback
-//        }
+        onError: {
+            console.log('Error: ' + traceback)
+            messageLabel.text = "py error: " + traceback
+        }
 
-//        onFetchBridges: {
-//            py.call('bridgemodel.fetch_bridges', []);
-//        }
+        onFetchBridges: {
+            py.call('bridgemodel.fetch_bridges', []);
+        }
 
-//        onBridgesFetched: {
-//            listModel.clear();
-//            for (var i = 0; i < bridges.length; i++) {
-//                listModel.append(bridges[i]);
-//            }
-//        }
+        onBridgesFetched: {
+            listModel.clear();
+            for (var i = 0; i < bridges.length; i++) {
+                listModel.append(bridges[i]);
+            }
+        }
 
-//        Component.onCompleted: {
-//            addImportPath(Qt.resolvedUrl('.'));
+        Component.onCompleted: {
+            addImportPath(Qt.resolvedUrl('.'));
 
-//            setHandler('bridges-fetched', bridgesFetched)
+            setHandler('bridges-fetched', bridgesFetched)
 
-//            importModule('bridgemodel', function () {
-//                py.call('bridgemodel.fetch_bridges', []);
-//            });
-//        }
-//    }
+            importModule('bridgemodel', function () {
+                py.call('bridgemodel.fetch_bridges', []);
+            });
+        }
+    }
 }
