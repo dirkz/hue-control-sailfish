@@ -27,7 +27,8 @@ OTHER_FILES += qml/hue-control-sailfish.qml \
     hue-control-sailfish.desktop \
     qml/pages/ShowBridges.qml \
     qml/pages/bridgemodel.py \
-    qml/pages/BridgeInfo.qml
+    qml/pages/BridgeInfo.qml \
+    qml/pages/TextAreaLog.qml
 
 # to disable building translations every time, comment out the
 # following CONFIG line
