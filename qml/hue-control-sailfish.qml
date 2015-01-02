@@ -34,6 +34,6 @@ import "pages"
 
 ApplicationWindow
 {
-    initialPage: Component { ShowBridges { } }
+    initialPage: Component { TextAreaLog { } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
 }
