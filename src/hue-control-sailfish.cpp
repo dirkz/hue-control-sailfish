@@ -28,12 +28,32 @@
   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import QtQuick 2.0
-import Sailfish.Silica 1.0
-import "pages"
+#ifdef QT_QML_DEBUG
+#include <QtQuick>
+#endif
 
-ApplicationWindow
+#include <sailfishapp.h>
+
+#include "sqlbridgemodel.h"
+
+int main(int argc, char *argv[])
 {
-    initialPage: Component { ShowBridges { } }
-    cover: Qt.resolvedUrl("cover/CoverPage.qml")
+    // SailfishApp::main() will display "qml/template.qml", if you need more
+    // control over initialization, you can use:
+    //
+    //   - SailfishApp::application(int, char *[]) to get the QGuiApplication *
+    //   - SailfishApp::createView() to get a new QQuickView * instance
+    //   - SailfishApp::pathTo(QString) to get a QUrl to a resource file
+    //
+    // To display the view, call "show()" (will show fullscreen on device).
+
+    QGuiApplication *app = SailfishApp::application(argc, argv);
+    QQuickView *view = SailfishApp::createView();
+
+    qmlRegisterType<SqlBridgeModel>("SqlBridgeModel", 1, 0, "SqlBridgeModel");
+
+    view->setSource(SailfishApp::pathTo("qml/hue-control-sailfish.qml"));
+    view->showFullScreen();
+    return app->exec();
 }
+

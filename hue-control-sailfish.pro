@@ -16,7 +16,10 @@ CONFIG += sailfishapp
 
 QT += sql
 
-SOURCES +=
+SOURCES += \
+    sqlbridgemodel.cpp \
+    src/hue-control-sailfish.cpp \
+    sqlquerymodel.cpp
 
 OTHER_FILES += qml/hue-control-sailfish.qml \
     qml/cover/CoverPage.qml \
@@ -35,5 +38,7 @@ OTHER_FILES += qml/hue-control-sailfish.qml \
 CONFIG += sailfishapp_i18n
 TRANSLATIONS += translations/hue-control-sailfish-de.ts
 
-HEADERS +=
+HEADERS += \
+    sqlbridgemodel.h \
+    sqlquerymodel.h
 
