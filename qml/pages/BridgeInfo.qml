@@ -32,9 +32,14 @@ Page {
                 text: qsTr("Registered: Unknown")
             }
 
-            Label {
+            TextArea {
+                autoScrollEnabled: true
+                focus:  true
+                readOnly: true
+                anchors.top: isRegisteredLabel.bottom
                 id: messageLabel
                 color: Theme.highlightColor
+                wrapMode: TextEdit.WrapAnywhere
             }
 
             PullDownMenu {
@@ -56,7 +61,7 @@ Page {
 
             onError: {
                 console.log('python: ' + traceback)
-                messageLabel.text = "python: " + traceback
+                messageLabel.text += "\npython: " + traceback
             }
 
             onBridgeRegistered: {
@@ -65,16 +70,13 @@ Page {
 
             onBridgeRegisterError: {
                 console.log("onBridgeRegisterError " + message)
-                messageLabel.text = message
+                messageLabel.text += "\n" + message
             }
 
             onRegisterBridge: {
                 console.log("onRegisterBridge")
                 py.call('bridgemodel.register_bridge', [bridge.internalipaddress], function(successful) {
                     updateRegisteredLabel(successful)
-                    if (successful) {
-                        messageLabel.text = ""
-                    }
                 })
             }
 

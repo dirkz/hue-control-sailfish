@@ -63,6 +63,7 @@ def is_bridge_registered(ip):
 def register_bridge(ip):
     url = "http://" + ip + "/api"
     payload = json.dumps({"devicetype": username(), "username": unique_id()}).encode('utf-8')
+    pyotherside.send('bridge-register-error', str(payload))
     data = fetch(url, payload)
     error_msg = handle_error(data)
     return error_msg == None
