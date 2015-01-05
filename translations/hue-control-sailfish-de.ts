@@ -2,6 +2,21 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
+    <name>BridgeInfo</name>
+    <message>
+        <source>Bridge Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Registered: Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CoverPage</name>
     <message>
         <source>My Cover</source>

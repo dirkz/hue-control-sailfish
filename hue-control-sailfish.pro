@@ -25,7 +25,8 @@ OTHER_FILES += qml/hue-control-sailfish.qml \
     rpm/hue-control-sailfish.yaml \
     translations/*.ts \
     hue-control-sailfish.desktop \
-    qml/pages/ShowBridges.qml
+    qml/pages/ShowBridges.qml \
+    qml/pages/BridgeInfo.qml
 
 # to disable building translations every time, comment out the
 # following CONFIG line
