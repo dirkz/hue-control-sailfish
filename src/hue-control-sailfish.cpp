@@ -34,6 +34,7 @@
 
 #include <sailfishapp.h>
 
+#include "jsonlistmodel.h"
 
 int main(int argc, char *argv[])
 {
@@ -45,6 +46,7 @@ int main(int argc, char *argv[])
     //   - SailfishApp::pathTo(QString) to get a QUrl to a resource file
     //
     // To display the view, call "show()" (will show fullscreen on device).
+    qmlRegisterType<JsonListModel>("JsonListModel", 1, 0, "JsonListModel");
 
     return SailfishApp::main(argc, argv);
 }
