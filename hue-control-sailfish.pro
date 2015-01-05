@@ -15,7 +15,8 @@ TARGET = hue-control-sailfish
 CONFIG += sailfishapp
 
 SOURCES += src/hue-control-sailfish.cpp \
-    src/jsonlistmodel.cpp
+    src/jsonlistmodel.cpp \
+    src/jsonobjectfetcher.cpp
 
 OTHER_FILES += qml/hue-control-sailfish.qml \
     qml/cover/CoverPage.qml \
@@ -32,5 +33,6 @@ CONFIG += sailfishapp_i18n
 TRANSLATIONS += translations/hue-control-sailfish-de.ts
 
 HEADERS += \
-    src/jsonlistmodel.h
+    src/jsonlistmodel.h \
+    src/jsonobjectfetcher.h
 

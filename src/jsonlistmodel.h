@@ -8,8 +8,7 @@
 #include <QList>
 #include <QJsonObject>
 
-class QNetworkReply;
-class QNetworkAccessManager;
+#include "jsonobjectfetcher.h"
 
 class JsonListModel : public QAbstractListModel
 {
@@ -39,16 +38,15 @@ signals:
 public slots:
 
 private slots:
-    void fetchJsonFinished(QNetworkReply *);
+    void jsonObjectsReceived(const QList<QJsonObject> & objects);
 
 private:
     QUrl m_fetchUrl;
-    QNetworkAccessManager *m_networkAccessManager;
     QString m_lastError;
     QList<QByteArray> m_roleNames;
     QList<QJsonObject> m_jsonObjects;
+    JsonObjectFetcher m_jsonObjectFetcher;
 
-    QNetworkAccessManager *networkAccessManager();
     void generateRoleNamesFromJson();
 };
 

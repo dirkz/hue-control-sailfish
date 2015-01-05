@@ -40,18 +40,13 @@ void JsonListModel::setLastError(const QString & errorString)
     qDebug() << errorString;
 }
 
-QNetworkAccessManager *JsonListModel::networkAccessManager()
-{
-    if (m_networkAccessManager == NULL) {
-        m_networkAccessManager = new QNetworkAccessManager(this);
-        connect(m_networkAccessManager, SIGNAL(finished(QNetworkReply *)), this, SLOT(fetchJsonFinished(QNetworkReply *)));
-    }
-    return m_networkAccessManager;
-}
-
 void JsonListModel::fetchJson()
 {
-    networkAccessManager()->get(QNetworkRequest(fetchUrl()));
+    QObject::connect(&m_jsonObjectFetcher, &JsonObjectFetcher::jsonObjectsReceived,
+            this, &JsonListModel::jsonObjectsReceived);
+    QObject::connect(&m_jsonObjectFetcher, &JsonObjectFetcher::lastErrorChanged,
+            this, &JsonListModel::setLastError);
+    m_jsonObjectFetcher.fetchJsonObjects(fetchUrl());
 }
 
 void JsonListModel::generateRoleNamesFromJson()
@@ -65,42 +60,19 @@ void JsonListModel::generateRoleNamesFromJson()
     }
 }
 
-void JsonListModel::fetchJsonFinished(QNetworkReply *reply)
+void JsonListModel::jsonObjectsReceived(const QList<QJsonObject> & objects)
 {
-    if (reply->error() == QNetworkReply::NoError) {
-        QByteArray bytes = reply->readAll();
-        QJsonParseError *parseError = NULL;
-        QJsonDocument jsonDocument = QJsonDocument::fromJson(bytes, parseError);
-        if (parseError != NULL) {
-            setLastError(parseError->errorString());
-        } else {
-            if (jsonDocument.isArray()) {
-                beginResetModel();
-                m_jsonObjects.clear();
-                QJsonArray jsonArray = jsonDocument.array();
-                foreach (const QJsonValue& jsonValue, jsonArray) {
-                    if (jsonValue.isObject()) {
-                        QJsonObject jsonObject = jsonValue.toObject();
-                        qDebug() << jsonObject;
-                        m_jsonObjects.append(jsonObject);
-                    } else {
-                        setLastError(tr("json elements are no objects"));
-                    }
-                }
-                generateRoleNamesFromJson();
-                endResetModel();
-            } else {
-                setLastError(tr("returned json is not an array"));
-            }
+    if (objects.count() > 0) {
+        beginResetModel();
+        m_jsonObjects.clear();
+        foreach (const QJsonObject& jsonObject, objects) {
+            qDebug() << jsonObject;
+            m_jsonObjects.append(jsonObject);
         }
+        generateRoleNamesFromJson();
+        endResetModel();
     } else {
-        qDebug("error: %s", qPrintable(reply->errorString()));
-        QString errorString = reply->errorString();
-        if (!errorString.isEmpty()) {
-            setLastError(reply->errorString());
-        } else {
-            setLastError(tr("unknown error when fetching json"));
-        }
+        setLastError(tr("no json objects fetched"));
     }
 }
 

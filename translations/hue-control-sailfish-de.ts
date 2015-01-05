@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.1">
 <context>
     <name>CoverPage</name>
     <message>
@@ -26,15 +26,22 @@
 <context>
     <name>JsonListModel</name>
     <message>
+        <source>no json objects fetched</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>JsonObjectFetcher</name>
+    <message>
+        <source>json elements are no objects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>returned json is not an array</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>unknown error when fetching json</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>json elements are no objects</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
