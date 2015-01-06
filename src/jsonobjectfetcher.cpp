@@ -54,7 +54,6 @@ void JsonObjectFetcher::jsonObjectsFetched(QNetworkReply *reply)
                 foreach (const QJsonValue& jsonValue, jsonArray) {
                     if (jsonValue.isObject()) {
                         QJsonObject jsonObject = jsonValue.toObject();
-                        qDebug() << jsonObject;
                         jsonObjects.append(jsonObject);
                     } else {
                         setLastError(tr("json elements are no objects"));

@@ -16,7 +16,9 @@ CONFIG += sailfishapp
 
 SOURCES += src/hue-control-sailfish.cpp \
     src/jsonlistmodel.cpp \
-    src/jsonobjectfetcher.cpp
+    src/jsonobjectfetcher.cpp \
+    src/bridgeregistrationmodel.cpp \
+    src/hueerror.cpp
 
 OTHER_FILES += qml/hue-control-sailfish.qml \
     qml/cover/CoverPage.qml \
@@ -35,5 +37,7 @@ TRANSLATIONS += translations/hue-control-sailfish-de.ts
 
 HEADERS += \
     src/jsonlistmodel.h \
-    src/jsonobjectfetcher.h
+    src/jsonobjectfetcher.h \
+    src/bridgeregistrationmodel.h \
+    src/hueerror.h
 

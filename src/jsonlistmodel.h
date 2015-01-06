@@ -18,6 +18,7 @@ static const QString ID_REPLACEMENT;
 
 public:
     explicit JsonListModel(QObject *parent = 0);
+    ~JsonListModel();
     int rowCount ( const QModelIndex & parent = QModelIndex() ) const;
     QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
     QHash<int, QByteArray> roleNames() const;

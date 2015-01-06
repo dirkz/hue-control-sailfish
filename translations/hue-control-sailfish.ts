@@ -8,11 +8,26 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Registered: Unknown</source>
+        <source>Register</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BridgeRegistrationModel</name>
+    <message>
+        <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Register</source>
+        <source>no json objects fetched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unregistered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Registered</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -10,11 +10,20 @@
 
 #include "jsonlistmodel.h"
 
-const QString JsonListModel::ID_REPLACEMENT = "theId";
+const QString JsonListModel::ID_REPLACEMENT = "anId";
 
 JsonListModel::JsonListModel(QObject *parent) :
     QAbstractListModel(parent)
 {
+    QObject::connect(&m_jsonObjectFetcher, &JsonObjectFetcher::jsonObjectsReceived,
+            this, &JsonListModel::jsonObjectsReceived);
+    QObject::connect(&m_jsonObjectFetcher, &JsonObjectFetcher::lastErrorChanged,
+            this, &JsonListModel::setLastError);
+}
+
+JsonListModel::~JsonListModel()
+{
+    m_jsonObjectFetcher.disconnect();
 }
 
 void JsonListModel::setFetchUrl(const QUrl & url)
@@ -42,10 +51,6 @@ void JsonListModel::setLastError(const QString & errorString)
 
 void JsonListModel::fetchJson()
 {
-    QObject::connect(&m_jsonObjectFetcher, &JsonObjectFetcher::jsonObjectsReceived,
-            this, &JsonListModel::jsonObjectsReceived);
-    QObject::connect(&m_jsonObjectFetcher, &JsonObjectFetcher::lastErrorChanged,
-            this, &JsonListModel::setLastError);
     m_jsonObjectFetcher.fetchJsonObjects(fetchUrl());
 }
 
@@ -66,7 +71,6 @@ void JsonListModel::jsonObjectsReceived(const QList<QJsonObject> & objects)
         beginResetModel();
         m_jsonObjects.clear();
         foreach (const QJsonObject& jsonObject, objects) {
-            qDebug() << jsonObject;
             m_jsonObjects.append(jsonObject);
         }
         generateRoleNamesFromJson();
