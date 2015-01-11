@@ -56,7 +56,7 @@ Page {
                 id: pullDownMenu
                 MenuItem {
                     text: qsTr("Register")
-                    onClicked: py.registerBridge();
+                    onClicked: bridgeModel.registerBridge();
 
                 }
             }

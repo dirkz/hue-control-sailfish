@@ -1,10 +1,13 @@
 #include <QDebug>
 #include <QNetworkInterface>
 #include <QCryptographicHash>
+#include <QIODevice>
 
 #include "bridgeregistrationmodel.h"
 
 #include "hueerror.h"
+
+static const QString DEVICE_TYPE = "hue-control";
 
 BridgeRegistrationModel::BridgeRegistrationModel(QObject *parent) :
     QObject(parent),
@@ -13,9 +16,9 @@ BridgeRegistrationModel::BridgeRegistrationModel(QObject *parent) :
     m_userNameGenerated(false)
 {
     QObject::connect(&m_jsonObjectFetcher, &JsonObjectFetcher::jsonObjectsReceived,
-            this, &BridgeRegistrationModel::jsonObjectsReceived);
+                     this, &BridgeRegistrationModel::jsonObjectsReceived);
     QObject::connect(&m_jsonObjectFetcher, &JsonObjectFetcher::lastErrorChanged,
-            this, &BridgeRegistrationModel::setLastError);
+                     this, &BridgeRegistrationModel::setLastError);
 }
 
 BridgeRegistrationModel::~BridgeRegistrationModel()
@@ -45,31 +48,63 @@ QString BridgeRegistrationModel::userName()
     return m_userName;
 }
 
+QUrl BridgeRegistrationModel::bridgeStatusUrl()
+{
+    return QUrl("http://" + bridgeIpAddress() + "/api/" + userName());
+}
+
+QUrl BridgeRegistrationModel::bridgeRegistrationUrl()
+{
+    return QUrl("http://" + bridgeIpAddress() + "/api/");
+}
+
 void BridgeRegistrationModel::updateRegistrationStatus()
 {
     if (!m_userNameGenerated) {
         generateUserName();
     }
-    m_jsonObjectFetcher.fetchJsonObjects(QUrl("http://" + bridgeIpAddress() + "/api/" + userName()));
+    m_jsonObjectFetcher.get(bridgeStatusUrl());
 }
 
-void BridgeRegistrationModel::jsonObjectsReceived(const QList<QJsonObject> & objects)
+void BridgeRegistrationModel::registerBridge()
 {
-    if (objects.count() > 0) {
-        if (objects.count() == 1) {
+    if (!m_userNameGenerated) {
+        generateUserName();
+    }
+    QString data = QString("{\"devicetype\":\"%1\",\"username\":\"%2\"}").arg(DEVICE_TYPE).arg(userName());
+    m_jsonObjectFetcher.post(bridgeRegistrationUrl(), data.toUtf8());
+}
+
+void BridgeRegistrationModel::jsonObjectsReceived(const QUrl & url, const QList<QJsonObject> & objects)
+{
+    if (url == bridgeStatusUrl()) {
+        if (objects.count() >= 1) {
             HueError error(this, objects.at(0));
             if (error.isError()) {
                 setLastError(error.description());
                 setRegistrationStatus(tr("Unregistered"));
             } else {
                 setRegistrationStatus(tr("Registered"));
+                setLastError("");
             }
         } else {
-            setRegistrationStatus(tr("Registered"));
+            setLastError(tr("No JSON objects fetched"));
+            setRegistrationStatus(tr("Unknown"));
         }
     } else {
-        setLastError(tr("no json objects fetched"));
-        setRegistrationStatus(tr("Unknown"));
+        if (objects.count() > 0) {
+            if (objects.count() == 1) {
+                HueError error(this, objects.at(0));
+                if (error.isError()) {
+                    setLastError(error.description());
+                } else {
+                    setRegistrationStatus(tr("Registered"));
+                }
+            }
+        } else {
+            setLastError(tr("no json objects fetched"));
+            setRegistrationStatus(tr("Unknown"));
+        }
     }
 }
 

@@ -51,7 +51,7 @@ void JsonListModel::setLastError(const QString & errorString)
 
 void JsonListModel::fetchJson()
 {
-    m_jsonObjectFetcher.fetchJsonObjects(fetchUrl());
+    m_jsonObjectFetcher.get(fetchUrl());
 }
 
 void JsonListModel::generateRoleNamesFromJson()
@@ -65,8 +65,9 @@ void JsonListModel::generateRoleNamesFromJson()
     }
 }
 
-void JsonListModel::jsonObjectsReceived(const QList<QJsonObject> & objects)
+void JsonListModel::jsonObjectsReceived(const QUrl & url, const QList<QJsonObject> & objects)
 {
+    Q_UNUSED(url)
     if (objects.count() > 0) {
         beginResetModel();
         m_jsonObjects.clear();

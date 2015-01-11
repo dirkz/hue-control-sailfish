@@ -2,6 +2,7 @@
 #define BRIDGEREGISTRATIONMODEL_H
 
 #include <QObject>
+#include <QUrl>
 
 #include "jsonobjectfetcher.h"
 
@@ -27,6 +28,7 @@ public:
     void setBridgeIpAddress(const QString & ipAddress);
 
     Q_INVOKABLE void updateRegistrationStatus();
+    Q_INVOKABLE void registerBridge();
 
 signals:
     void lastErrorChanged(const QString & errorMessage);
@@ -44,12 +46,14 @@ private:
     bool m_userNameGenerated;
     QString m_bridgeIpAddress;
 
-    void jsonObjectsReceived(const QList<QJsonObject> & objects);
+    void jsonObjectsReceived(const QUrl & url, const QList<QJsonObject> & objects);
     void generateUserName();
 
     void setUserName(const QString & name);
     void setRegistrationStatus(const QString & status);
 
+    QUrl bridgeStatusUrl();
+    QUrl bridgeRegistrationUrl();
 };
 
 #endif // BRIDGEREGISTRATIONMODEL_H

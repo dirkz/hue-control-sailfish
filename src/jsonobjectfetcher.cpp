@@ -34,9 +34,16 @@ QNetworkAccessManager *JsonObjectFetcher::networkAccessManager()
     return m_networkAccessManager;
 }
 
-void JsonObjectFetcher::fetchJsonObjects(QUrl url)
+void JsonObjectFetcher::get(const QUrl & url)
 {
     networkAccessManager()->get(QNetworkRequest(url));
+}
+
+void JsonObjectFetcher::post(const QUrl & url, const QByteArray & data)
+{
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    networkAccessManager()->post(request, data);
 }
 
 void JsonObjectFetcher::jsonObjectsFetched(QNetworkReply *reply)
@@ -56,12 +63,17 @@ void JsonObjectFetcher::jsonObjectsFetched(QNetworkReply *reply)
                         QJsonObject jsonObject = jsonValue.toObject();
                         jsonObjects.append(jsonObject);
                     } else {
-                        setLastError(tr("json elements are no objects"));
+                        setLastError(tr("JSON elements are no objects"));
                     }
                 }
-                emit jsonObjectsReceived(jsonObjects);
+                emit jsonObjectsReceived(reply->request().url(), jsonObjects);
+            } else if (jsonDocument.isObject()) {
+                QList<QJsonObject> jsonObjects;
+                QJsonObject jsonObject = jsonDocument.object();
+                jsonObjects.append(jsonObject);
+                emit jsonObjectsReceived(reply->request().url(), jsonObjects);
             } else {
-                setLastError(tr("returned json is not an array"));
+                setLastError(tr("Unsupported JSON response"));
             }
         }
     } else {
@@ -70,7 +82,7 @@ void JsonObjectFetcher::jsonObjectsFetched(QNetworkReply *reply)
         if (!errorString.isEmpty()) {
             setLastError(reply->errorString());
         } else {
-            setLastError(tr("unknown error when fetching json"));
+            setLastError(tr("Unknown error when fetching JSON"));
         }
     }
 }

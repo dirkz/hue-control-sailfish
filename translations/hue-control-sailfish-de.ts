@@ -30,6 +30,10 @@
         <source>Registered</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No JSON objects fetched</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CoverPage</name>
@@ -63,15 +67,15 @@
 <context>
     <name>JsonObjectFetcher</name>
     <message>
-        <source>json elements are no objects</source>
+        <source>JSON elements are no objects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>returned json is not an array</source>
+        <source>Unsupported JSON response</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>unknown error when fetching json</source>
+        <source>Unknown error when fetching JSON</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -39,7 +39,7 @@ signals:
 public slots:
 
 private slots:
-    void jsonObjectsReceived(const QList<QJsonObject> & objects);
+    void jsonObjectsReceived(const QUrl & url, const QList<QJsonObject> & objects);
 
 private:
     QUrl m_fetchUrl;
