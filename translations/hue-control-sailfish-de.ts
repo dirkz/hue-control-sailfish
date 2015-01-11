@@ -11,6 +11,10 @@
         <source>Register</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Update Registration Status</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BridgeRegistrationModel</name>
@@ -39,7 +43,11 @@
     <name>CoverPage</name>
     <message>
         <source>My Cover</source>
-        <translation>Mein Cover</translation>
+        <translation type="vanished">Mein Cover</translation>
+    </message>
+    <message>
+        <source>Hue Control</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

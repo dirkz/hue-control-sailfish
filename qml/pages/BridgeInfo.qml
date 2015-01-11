@@ -52,11 +52,16 @@ Page {
                 text: bridgeModel.lastError
             }
 
-            PullDownMenu {
+            PushUpMenu {
                 id: pullDownMenu
                 MenuItem {
                     text: qsTr("Register")
                     onClicked: bridgeModel.registerBridge();
+
+                }
+                MenuItem {
+                    text: qsTr("Update Registration Status")
+                    onClicked: bridgeModel.updateRegistrationStatus();
 
                 }
             }
