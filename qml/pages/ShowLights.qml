@@ -6,17 +6,19 @@ import JsonListModel 1.0
 import "../helpers.js" as H
 
 Page {
-    id: showBridges
+    id: showLights
+
+    property variant bridgeApiUrl
 
     Label {
         id: messageLabel
-        text: bridgeModel.lastError
+        text: lightsModel.lastError
     }
 
     JsonListModel {
-        id: bridgeModel
+        id: lightsModel
         Component.onCompleted: {
-            bridgeModel.fetchUrl = "https://www.meethue.com/api/nupnp"
+            lightsModel.fetchUrl = bridgeApiUrl + "lights"
         }
     }
 
@@ -25,14 +27,14 @@ Page {
         anchors.fill: parent
         anchors.top: messageLabel.bottom
 
-        model: bridgeModel
+        model: lightsModel
 
-        header: PageHeader { title: qsTr("Bridges") }
+        header: PageHeader { title: qsTr("Lights") }
 
         ViewPlaceholder {
             enabled: listView.count == 0
-            text: qsTr("No bridges")
-            hintText: qsTr("Pull down to add bridges")
+            text: qsTr("No lights loaded")
+            hintText: qsTr("Pull down to refresh")
         }
 
         delegate: ListItem {
@@ -41,7 +43,7 @@ Page {
                 color: listItem.highlighted ? Theme.highlightColor : Theme.primaryColor
                 x: Theme.paddingLarge
                 anchors.verticalCenter: parent.verticalCenter
-                text: model.name + " (" + H.encloseTag("b", model.internalipaddress) + ")"
+                text: model.name
             }
             onClicked: pageStack.push(Qt.resolvedUrl("BridgeInfo.qml"), { bridge: model })
         }
@@ -49,8 +51,8 @@ Page {
         PullDownMenu {
             id: pullDownMenu
             MenuItem {
-                text: qsTr("Fetch Bridges")
-                onClicked: bridgeModel.fetchJson()
+                text: qsTr("Refresh lights")
+                onClicked: lightsModel.fetchJson()
             }
         }
     }

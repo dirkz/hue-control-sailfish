@@ -15,6 +15,10 @@
         <source>Update Registration Status</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Lights</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BridgeRegistrationModel</name>
@@ -84,6 +88,25 @@
     </message>
     <message>
         <source>Fetch Bridges</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ShowLights</name>
+    <message>
+        <source>Lights</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No lights loaded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pull down to refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh lights</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

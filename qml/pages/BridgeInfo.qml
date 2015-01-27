@@ -52,8 +52,16 @@ Page {
                 text: bridgeModel.lastError
             }
 
-            PushUpMenu {
+            PullDownMenu {
                 id: pullDownMenu
+                MenuItem {
+                    text: qsTr("Lights")
+                    onClicked: pageStack.push(Qt.resolvedUrl("ShowLights.qml"), { bridgeApiUrl: bridgeModel.bridgeApiUrl })
+                }
+            }
+
+            PushUpMenu {
+                id: pushUpMenu
                 MenuItem {
                     text: qsTr("Register")
                     onClicked: bridgeModel.registerBridge();

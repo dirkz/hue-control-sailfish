@@ -48,9 +48,9 @@ QString BridgeRegistrationModel::userName()
     return m_userName;
 }
 
-QUrl BridgeRegistrationModel::bridgeStatusUrl()
+QUrl BridgeRegistrationModel::bridgeApiUrl()
 {
-    return QUrl("http://" + bridgeIpAddress() + "/api/" + userName());
+    return QUrl("http://" + bridgeIpAddress() + "/api/" + userName() + "/");
 }
 
 QUrl BridgeRegistrationModel::bridgeRegistrationUrl()
@@ -63,7 +63,7 @@ void BridgeRegistrationModel::updateRegistrationStatus()
     if (!m_userNameGenerated) {
         generateUserName();
     }
-    m_jsonObjectFetcher.get(bridgeStatusUrl());
+    m_jsonObjectFetcher.get(bridgeApiUrl());
 }
 
 void BridgeRegistrationModel::registerBridge()
@@ -77,7 +77,7 @@ void BridgeRegistrationModel::registerBridge()
 
 void BridgeRegistrationModel::jsonObjectsReceived(const QUrl & url, const QList<QJsonObject> & objects)
 {
-    if (url == bridgeStatusUrl()) {
+    if (url == bridgeApiUrl()) {
         if (objects.count() >= 1) {
             HueError error(this, objects.at(0));
             if (error.isError()) {
@@ -133,8 +133,11 @@ void BridgeRegistrationModel::setBridgeIpAddress(const QString & ipAddress)
 
 void BridgeRegistrationModel::setUserName(const QString & name)
 {
-    m_userName = name;
-    emit userNameChanged(m_userName);
+    if (name != m_userName) {
+        m_userName = name;
+        emit userNameChanged(m_userName);
+        emit bridgeApiUrlChanged(bridgeApiUrl());
+    }
 }
 
 void BridgeRegistrationModel::setRegistrationStatus(const QString & status)

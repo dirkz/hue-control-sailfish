@@ -27,6 +27,9 @@ public:
     QString bridgeIpAddress();
     void setBridgeIpAddress(const QString & ipAddress);
 
+    Q_PROPERTY(QUrl bridgeApiUrl READ bridgeApiUrl NOTIFY bridgeApiUrlChanged)
+    QUrl bridgeApiUrl();
+
     Q_INVOKABLE void updateRegistrationStatus();
     Q_INVOKABLE void registerBridge();
 
@@ -35,6 +38,7 @@ signals:
     void userNameChanged(const QString & userName);
     void registrationStatusChanged(const QString & bridgeRegisteredInfoString);
     void bridgeIpAddressChanged(const QString & bridgeIpAddress);
+    void bridgeApiUrlChanged(const QUrl & url);
 
 public slots:
 
@@ -52,7 +56,6 @@ private:
     void setUserName(const QString & name);
     void setRegistrationStatus(const QString & status);
 
-    QUrl bridgeStatusUrl();
     QUrl bridgeRegistrationUrl();
 };
 
