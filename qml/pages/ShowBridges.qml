@@ -4,20 +4,34 @@ import Sailfish.Silica 1.0
 import JsonListModel 1.0
 
 import "../js/helpers.js" as H
+import "../js/jshue/src/jshue.js" as Hue
 
 Page {
     id: showBridges
 
-    Label {
-        id: messageLabel
-        text: bridgeModel.lastError
+    property var hue: Hue.jsHue()
+
+    function discoverBridges() {
+        messageLabel.text = ""
+        hue.discover(function (bridges) {
+            if (bridges.length === 0) {
+                console.log('No bridges found')
+                messageLabel.text = qsTr("No bridges found")
+            } else {
+                bridges.forEach(function (b) {
+                    console.log('found bridge: %s', b.internalipaddress)
+                    listModel.append(b)
+                })
+            }
+        }, function (error) {
+            messageLabel.text += error.message
+        })
     }
 
-    JsonListModel {
-        id: bridgeModel
-        Component.onCompleted: {
-            bridgeModel.fetchUrl = "https://www.meethue.com/api/nupnp"
-        }
+    Component.onCompleted: discoverBridges()
+
+    Label {
+        id: messageLabel
     }
 
     SilicaListView {
@@ -25,9 +39,13 @@ Page {
         anchors.fill: parent
         anchors.top: messageLabel.bottom
 
-        model: bridgeModel
+        model: ListModel {
+            id: listModel
+        }
 
-        header: PageHeader { title: qsTr("Bridges") }
+        header: PageHeader {
+            title: qsTr("Bridges")
+        }
 
         ViewPlaceholder {
             enabled: listView.count == 0
@@ -41,16 +59,19 @@ Page {
                 color: listItem.highlighted ? Theme.highlightColor : Theme.primaryColor
                 x: Theme.paddingLarge
                 anchors.verticalCenter: parent.verticalCenter
-                text: model.name + " (" + H.encloseTag("b", model.internalipaddress) + ")"
+                text: model.name + " (" + H.encloseTag(
+                          "b", model.internalipaddress) + ")"
             }
-            onClicked: pageStack.push(Qt.resolvedUrl("BridgeInfo.qml"), { bridge: model })
+            onClicked: pageStack.push(Qt.resolvedUrl("BridgeInfo.qml"), {
+                                          bridge: model
+                                      })
         }
 
         PullDownMenu {
             id: pullDownMenu
             MenuItem {
                 text: qsTr("Fetch Bridges")
-                onClicked: bridgeModel.fetchJson()
+                onClicked: discoverBridges()
             }
         }
     }

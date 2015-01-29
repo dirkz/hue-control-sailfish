@@ -90,6 +90,10 @@
         <source>Fetch Bridges</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No bridges found</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ShowLights</name>
