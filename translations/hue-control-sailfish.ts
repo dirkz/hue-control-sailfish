@@ -36,6 +36,25 @@
     </message>
 </context>
 <context>
+    <name>LightDetail</name>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Light off/on</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ShowBridges</name>
     <message>
         <source>Bridges</source>

@@ -68,7 +68,7 @@ Page {
                 anchors.verticalCenter: parent.verticalCenter
                 text: model.name
             }
-            onClicked: pageStack.push(Qt.resolvedUrl("BridgeInfo.qml"), { bridge: model })
+            onClicked: pageStack.push(Qt.resolvedUrl("LightDetail.qml"), { user: user, light: model })
         }
 
         PullDownMenu {
