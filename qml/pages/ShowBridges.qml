@@ -3,7 +3,7 @@ import Sailfish.Silica 1.0
 
 import JsonListModel 1.0
 
-import "../helpers.js" as H
+import "../js/helpers.js" as H
 
 Page {
     id: showBridges
