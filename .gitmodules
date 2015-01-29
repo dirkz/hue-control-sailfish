@@ -1,3 +1,6 @@
 [submodule "qml/js/jshue"]
 	path = qml/js/jshue
 	url = git@github.com:dirkz/jshue.git
+[submodule "qml/js/underscore"]
+	path = qml/js/underscore
+	url = git@github.com:dirkz/underscore.git

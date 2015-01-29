@@ -29,7 +29,8 @@ OTHER_FILES += qml/hue-control-sailfish.qml \
     qml/pages/ShowLights.qml \
     qml/helpers.js \
     qml/js/jshue/src/jshue.js \
-    qml/js/helpers.js
+    qml/js/helpers.js \
+    qml/js/underscore/underscore.js
 
 # to disable building translations every time, comment out the
 # following CONFIG line

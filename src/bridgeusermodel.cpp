@@ -31,7 +31,7 @@ void BridgeUserModel::generateUserName()
         qDebug() << "interface" << interface.name() << interface.humanReadableName() << interface.hardwareAddress();
         crypto.addData(interface.name().toUtf8());
     }
-    setUserName(crypto.result().toHex());
+    setUserName("as" + crypto.result().toHex());
     qDebug() << m_userName;
 }
 

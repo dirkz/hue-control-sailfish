@@ -22,6 +22,8 @@ Page {
     function checkRegistrationStatus() {
         user.getLights(function(lights) {
             console.log("have lights: " + JSON.stringify(lights))
+            var errors = H.hueErrors(lights)
+            console.log("have errors: " + JSON.stringify(errors))
             registrationStatusLabel.text = qsTr("Registered")
             messageLabel.text = ""
         },
