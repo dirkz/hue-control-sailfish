@@ -19,27 +19,16 @@
         <source>Lights</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>BridgeRegistrationModel</name>
-    <message>
-        <source>Unknown</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>no json objects fetched</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unregistered</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Registered</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>No JSON objects fetched</source>
+        <source>Not registered</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -67,28 +56,6 @@
     <message>
         <source>Hello Sailors</source>
         <translation type="obsolete">Hallo Matrosen</translation>
-    </message>
-</context>
-<context>
-    <name>JsonListModel</name>
-    <message>
-        <source>no json objects fetched</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>JsonObjectFetcher</name>
-    <message>
-        <source>JSON elements are no objects</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unsupported JSON response</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unknown error when fetching JSON</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

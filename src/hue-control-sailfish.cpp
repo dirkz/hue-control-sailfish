@@ -34,8 +34,7 @@
 
 #include <sailfishapp.h>
 
-#include "jsonlistmodel.h"
-#include "bridgeregistrationmodel.h"
+#include "bridgeusermodel.h"
 
 int main(int argc, char *argv[])
 {
@@ -47,8 +46,8 @@ int main(int argc, char *argv[])
     //   - SailfishApp::pathTo(QString) to get a QUrl to a resource file
     //
     // To display the view, call "show()" (will show fullscreen on device).
-    qmlRegisterType<JsonListModel>("JsonListModel", 1, 0, "JsonListModel");
-    qmlRegisterType<BridgeRegistrationModel>("BridgeRegistrationModel", 1, 0, "BridgeRegistrationModel");
+
+    qmlRegisterType<BridgeUserModel>("BridgeUserModel", 1, 0, "BridgeUserModel");
 
     return SailfishApp::main(argc, argv);
 }

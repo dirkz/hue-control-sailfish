@@ -1,8 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-import JsonListModel 1.0
-
 import "../js/helpers.js" as H
 import "../js/jshue/src/jshue.js" as Hue
 
@@ -14,12 +12,13 @@ Page {
     function discoverBridges() {
         messageLabel.text = ""
         hue.discover(function (bridges) {
+            listModel.clear()
             if (bridges.length === 0) {
-                console.log('No bridges found')
+                console.log("No bridges found")
                 messageLabel.text = qsTr("No bridges found")
             } else {
                 bridges.forEach(function (b) {
-                    console.log('found bridge: %s', b.internalipaddress)
+                    console.log("found bridge: ", b.internalipaddress)
                     listModel.append(b)
                 })
             }

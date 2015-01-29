@@ -15,10 +15,7 @@ TARGET = hue-control-sailfish
 CONFIG += sailfishapp
 
 SOURCES += src/hue-control-sailfish.cpp \
-    src/jsonlistmodel.cpp \
-    src/jsonobjectfetcher.cpp \
-    src/bridgeregistrationmodel.cpp \
-    src/hueerror.cpp
+    src/bridgeusermodel.cpp
 
 OTHER_FILES += qml/hue-control-sailfish.qml \
     qml/cover/CoverPage.qml \
@@ -30,7 +27,9 @@ OTHER_FILES += qml/hue-control-sailfish.qml \
     qml/pages/ShowBridges.qml \
     qml/pages/BridgeInfo.qml \
     qml/pages/ShowLights.qml \
-    qml/helpers.js
+    qml/helpers.js \
+    qml/js/jshue/src/jshue.js \
+    qml/js/helpers.js
 
 # to disable building translations every time, comment out the
 # following CONFIG line
@@ -38,8 +37,5 @@ CONFIG += sailfishapp_i18n
 TRANSLATIONS += translations/hue-control-sailfish-de.ts
 
 HEADERS += \
-    src/jsonlistmodel.h \
-    src/jsonobjectfetcher.h \
-    src/bridgeregistrationmodel.h \
-    src/hueerror.h
+    src/bridgeusermodel.h
 
