@@ -27,10 +27,6 @@
         <source>Not registered</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Unknown</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>CoverPage</name>

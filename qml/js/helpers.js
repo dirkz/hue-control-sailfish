@@ -1,9 +1,5 @@
 .pragma library
 
-.import "underscore/underscore.js" as U
-
-var _ = U.init();
-
 function encloseTag(tag, s) {
     return "<" + tag + ">" + s + "</" + tag + ">";
 }
@@ -11,8 +7,3 @@ function encloseTag(tag, s) {
 function lineBreak() {
     return "<br>"
 }
-
-function hueErrors(json) {
-    return _.map(json, _.identity );
-}
-

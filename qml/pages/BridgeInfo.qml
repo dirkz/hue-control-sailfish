@@ -3,8 +3,8 @@ import Sailfish.Silica 1.0
 
 import BridgeUserModel 1.0
 
-import "../js/jshue/src/jshue.js" as Hue
-import "../js/helpers.js" as H
+import "../js/jshue/src/jshue.js" as JsHue
+import "../js/hue.js" as Hue
 
 Page {
     id: bridgeInfo
@@ -12,26 +12,46 @@ Page {
     property variant bridge
 
     property string appName: "HueControl"
-    property var hue: Hue.jsHue()
+    property var hue: JsHue.jsHue()
     property var user
+    property bool registered: false
+
+    function checkErrors(json) {
+        var errors = Hue.errors(json)
+        console.log("errors", errors)
+        if (errors.length > 0) {
+            messageLabel.text = Hue.errorDescriptions(json)
+            registered = false
+            return true
+        } else {
+            messageLabel.text = ""
+            registered = true
+            return false
+        }
+    }
 
     function registerBridge() {
-        user.create(appName)
+        var success = function(result) {
+            console.log("registerBridge " + JSON.stringify(result))
+            var ok = checkErrors(result)
+        }
+        var fail = function(error) {
+            registered = false
+            messageLabel.text = error.message
+        }
+        user.create(appName, success, fail)
     }
 
     function checkRegistrationStatus() {
-        user.getLights(function(lights) {
-            console.log("have lights: " + JSON.stringify(lights))
-            var errors = H.hueErrors(lights)
-            console.log("have errors: " + JSON.stringify(errors))
-            registrationStatusLabel.text = qsTr("Registered")
-            messageLabel.text = ""
-        },
-        function(error) {
-            registrationStatusLabel.text = qsTr("Not registered")
+        var success = function(lights) {
+            console.log("got lights: " + JSON.stringify(lights))
+            checkErrors(lights)
+        }
+        var fail = function(error) {
+            registered = false
             messageLabel.text = error.message
         }
-        )
+        user.getLights(success, fail)
     }
 
     BridgeUserModel {
@@ -79,7 +99,7 @@ Page {
             }
             Label {
                 id: registrationStatusLabel
-                text: qsTr("Unknown")
+                text: registered ? qsTr("Registered") : qsTr("Not registered")
             }
             Label {
                 id: messageLabel
@@ -91,9 +111,8 @@ Page {
                 MenuItem {
                     text: qsTr("Lights")
                     onClicked: pageStack.push(Qt.resolvedUrl("ShowLights.qml"),
-                                              {
-                                                  bridgeApiUrl: bridgeModel.bridgeApiUrl
-                                              })
+                                              {user: user})
+                    enabled: registered
                 }
             }
 
@@ -102,6 +121,7 @@ Page {
                 MenuItem {
                     text: qsTr("Register")
                     onClicked: registerBridge();
+                    enabled: !registered
                 }
                 MenuItem {
                     text: qsTr("Update Registration Status")
