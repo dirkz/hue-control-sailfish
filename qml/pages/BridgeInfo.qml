@@ -18,7 +18,6 @@ Page {
 
     function checkErrors(json) {
         var errors = Hue.errors(json)
-        console.log("errors", errors)
         if (errors.length > 0) {
             messageLabel.text = Hue.errorDescriptions(json)
             registered = false
@@ -32,7 +31,6 @@ Page {
 
     function registerBridge() {
         var success = function(result) {
-            console.log("registerBridge " + JSON.stringify(result))
             var ok = checkErrors(result)
         }
         var fail = function(error) {
@@ -44,7 +42,6 @@ Page {
 
     function checkRegistrationStatus() {
         var success = function(lights) {
-            console.log("got lights: " + JSON.stringify(lights))
             checkErrors(lights)
         }
         var fail = function(error) {

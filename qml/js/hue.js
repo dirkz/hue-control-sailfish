@@ -11,3 +11,15 @@ function errors(json) {
 function errorDescriptions(json) {
     return _.pluck(errors(json), 'description').join("\n");
 }
+
+function lightsList(json) {
+    var buildLight = function(key) {
+        var obj = json[key]
+        obj.lightId = key
+        return obj
+    }
+
+    var keys = _.sortBy(_.keys(json), _.identity)
+    var lights = _.map(keys, buildLight)
+    return lights
+}

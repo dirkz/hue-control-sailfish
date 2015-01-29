@@ -1,25 +1,46 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-import JsonListModel 1.0
-
-import "../helpers.js" as H
+import "../js/jshue/src/jshue.js" as JsHue
+import "../js/hue.js" as Hue
 
 Page {
     id: showLights
 
-    property variant bridgeApiUrl
+    property var user
+
+    function checkErrors(json) {
+        var errors = Hue.errors(json)
+        if (errors.length > 0) {
+            messageLabel.text = Hue.errorDescriptions(json)
+            return true
+        } else {
+            messageLabel.text = ""
+            return false
+        }
+    }
+
+    function fetchLights() {
+        var success = function(lights) {
+            console.log("lights", JSON.stringify(lights))
+            if (!checkErrors(lights)) {
+                listModel.clear()
+                var list = Hue.lightsList(lights)
+                list.forEach(function (l) {
+                    listModel.append(l)
+                });
+            }
+        }
+        var fail = function(error) {
+            messageLabel.text = error.message
+        }
+        user.getLights(success, fail)
+    }
+
+    Component.onCompleted: fetchLights()
 
     Label {
         id: messageLabel
-        text: lightsModel.lastError
-    }
-
-    JsonListModel {
-        id: lightsModel
-        Component.onCompleted: {
-            lightsModel.fetchUrl = bridgeApiUrl + "lights"
-        }
     }
 
     SilicaListView {
@@ -27,7 +48,9 @@ Page {
         anchors.fill: parent
         anchors.top: messageLabel.bottom
 
-        model: lightsModel
+        model: ListModel {
+            id: listModel
+        }
 
         header: PageHeader { title: qsTr("Lights") }
 
@@ -52,7 +75,7 @@ Page {
             id: pullDownMenu
             MenuItem {
                 text: qsTr("Refresh lights")
-                onClicked: lightsModel.fetchJson()
+                onClicked: fetchLights()
             }
         }
     }
