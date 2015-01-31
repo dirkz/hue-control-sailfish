@@ -23,7 +23,6 @@ Page {
             registered = false
             return true
         } else {
-            messageLabel.text = ""
             registered = true
             return false
         }
@@ -90,15 +89,12 @@ Page {
             }
 
             Label {
-                text: "Internal user:"
-            }
-            Label {
-                text: bridgeUserModel.userName
-            }
-            Label {
                 id: registrationStatusLabel
-                text: registered ? qsTr("Registered") : qsTr("Not registered")
+                text: Hue.encloseTag("b",
+                                     registered ? qsTr("Registered") : qsTr(
+                                                      "Not registered"))
             }
+
             Label {
                 id: messageLabel
                 color: Theme.highlightColor

@@ -15,14 +15,12 @@ Page {
             messageLabel.text = Hue.errorDescriptions(json)
             return true
         } else {
-            messageLabel.text = ""
             return false
         }
     }
 
     function fetchLights() {
         var success = function (lights) {
-            console.log("lights", JSON.stringify(lights))
             if (!checkErrors(lights)) {
                 listModel.clear()
                 var list = Hue.lightsList(lights)
@@ -72,7 +70,17 @@ Page {
             }
             onClicked: pageStack.push(Qt.resolvedUrl("LightDetail.qml"), {
                                           user: user,
-                                          light: { lightId: model.lightId }
+                                          light: {
+                                              lightId: model.lightId,
+                                              reachable: false,
+                                              state: {
+                                                  on: false,
+                                                  hue: 0,
+                                                  bri: 0,
+                                                  sat: 0,
+                                                  ct: 0
+                                              }
+                                          }
                                       })
         }
 

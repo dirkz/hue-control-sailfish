@@ -11,40 +11,7 @@ Page {
     property variant light
     property bool manualRefresh: false
 
-    // debug
     Component.onCompleted: {
-//        var hue = JsHue.jsHue()
-//        user = hue.bridge('192.168.178.49').user('4940041b010273f7566238109b343bd280')
-//        light = {
-//            lightId: "2",
-//            state: {
-//                on: false,
-//                bri: 0,
-//                hue: 0,
-//                sat: 0,
-//                xy: [0, 0],
-//                ct: 0,
-//                alert: "none",
-//                effect: "none",
-//                colormode: "hs",
-//                reachable: false
-//            },
-//            type: "Extended color light",
-//            name: "Dirk Flur",
-//            modelid: "LCT001",
-//            uniqueid: "00:17:88:01:00:ba:9d:6f-0b",
-//            swversion: "65003148",
-//            pointsymbol: {
-//                1: "none",
-//                2: "none",
-//                3: "none",
-//                4: "none",
-//                5: "none",
-//                6: "none",
-//                7: "none",
-//                8: "none"
-//            }
-//        }
         refreshLightState()
     }
 
@@ -54,23 +21,23 @@ Page {
             messageLabel.text = Hue.errorDescriptions(json)
             return true
         } else {
-            messageLabel.text = ""
             return false
         }
     }
 
     function failure(error) {
         messageLabel.text = error.message
+        console.log(error.message)
     }
 
     function successStateFunction(stateName) {
         var name = stateName
-        return function(state) {
-//            console.log("state (" + stateName + ")", JSON.stringify(state))
+        return function (state) {
             if (!checkErrors(state)) {
-                var newLight = light;
+                var newLight = light
                 if (name) {
-                    var newState = Hue.extractSingleStateValue(state, lightStateUrl(light.lightId, name));
+                    var newState = Hue.extractSingleStateValue(
+                                state, lightStateUrl(light.lightId, name))
                     newLight.state[stateName] = newState
                     light = newLight
                 } else {
@@ -95,16 +62,19 @@ Page {
 
     function lightToggle() {
         var success = successStateFunction("on")
-        user.setLightState(light.lightId, {on: !light.state.on}, success, failure);
+        user.setLightState(light.lightId, {
+                               on: !light.state.on
+                           }, success, failure)
     }
 
     function sliderUpdateFunction(slider, name) {
-//        console.log("sliderUpdateFunction", name, slider.value, manualRefresh)
         if (!manualRefresh) {
             var success = successStateFunction(name)
-            var obj = {}
+            var obj = {
+
+            }
             obj[name] = slider.value
-            user.setLightState(light.lightId, obj, success, failure);
+            user.setLightState(light.lightId, obj, success, failure)
         }
     }
 
@@ -119,12 +89,14 @@ Page {
             id: columnContents
             width: parent.width
             anchors.top: pageHeader.bottom
-            spacing: 20
+            spacing: 10
             anchors.leftMargin: 10
-            x: Theme.paddingLarge
+            x: Theme.paddingSmall
 
             Label {
-                text: qsTr("reachable: ") + light.state.reachable + qsTr(" alert: ") + light.state.alert + qsTr(" effect: ") + light.state.effect
+                text: qsTr("reachable: ") + light.state.reachable + qsTr(
+                          " alert: ") + light.state.alert + qsTr(
+                          " effect: ") + light.state.effect
             }
 
             Label {
@@ -183,7 +155,6 @@ Page {
                 value: light.state.ct
                 onValueChanged: sliderUpdateFunction(ctSlider, "ct")
             }
-
         }
         PullDownMenu {
             id: pullDownMenu

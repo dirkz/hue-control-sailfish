@@ -1,29 +1,27 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-import "../js/helpers.js" as H
-import "../js/jshue/src/jshue.js" as Hue
+import "../js/jshue/src/jshue.js" as JsHue
+import "../js/hue.js" as Hue
 
 Page {
     id: showBridges
 
-    property var hue: Hue.jsHue()
+    property var hue: JsHue.jsHue()
 
     function discoverBridges() {
-        messageLabel.text = ""
         hue.discover(function (bridges) {
             listModel.clear()
             if (bridges.length === 0) {
-                console.log("No bridges found")
-                messageLabel.text = qsTr("No bridges found")
+                messageLabel.text = Hue.encloseTag("b",
+                                                   qsTr("No bridges found"))
             } else {
                 bridges.forEach(function (b) {
-                    console.log("found bridge: ", b.internalipaddress)
                     listModel.append(b)
                 })
             }
         }, function (error) {
-            messageLabel.text += error.message
+            messageLabel.text = Hue.encloseTag("b", error.message)
         })
     }
 
@@ -58,7 +56,7 @@ Page {
                 color: listItem.highlighted ? Theme.highlightColor : Theme.primaryColor
                 x: Theme.paddingLarge
                 anchors.verticalCenter: parent.verticalCenter
-                text: model.name + " (" + H.encloseTag(
+                text: model.name + " (" + Hue.encloseTag(
                           "b", model.internalipaddress) + ")"
             }
             onClicked: pageStack.push(Qt.resolvedUrl("BridgeInfo.qml"), {

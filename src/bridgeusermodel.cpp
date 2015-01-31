@@ -28,10 +28,10 @@ void BridgeUserModel::generateUserName()
 {
     QCryptographicHash crypto(QCryptographicHash::Md5);
     foreach (QNetworkInterface interface, QNetworkInterface::allInterfaces()) {
-        qDebug() << "interface" << interface.name() << interface.humanReadableName() << interface.hardwareAddress();
+//        qDebug() << "interface" << interface.name() << interface.humanReadableName() << interface.hardwareAddress();
         crypto.addData(interface.name().toUtf8());
     }
     setUserName(crypto.result().toHex());
-    qDebug() << m_userName;
+//    qDebug() << m_userName;
 }
 

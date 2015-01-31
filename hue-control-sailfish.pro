@@ -29,7 +29,6 @@ OTHER_FILES += qml/hue-control-sailfish.qml \
     qml/pages/ShowLights.qml \
     qml/helpers.js \
     qml/js/jshue/src/jshue.js \
-    qml/js/helpers.js \
     qml/js/underscore/underscore.js \
     qml/js/hue.js \
     qml/pages/LightDetail.qml

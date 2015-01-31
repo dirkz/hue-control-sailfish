@@ -4,6 +4,14 @@
 
 var _ = U.init()
 
+function encloseTag(tag, s) {
+    return "<" + tag + ">" + s + "</" + tag + ">";
+}
+
+function lineBreak() {
+    return "<br>"
+}
+
 function errors(json) {
     return _.filter(_.pluck(json, 'error'), _.identity)
 }
