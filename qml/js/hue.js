@@ -54,3 +54,13 @@ function extractSingleStateValue(json, stateUrl) {
         return undefined
     }
 }
+
+function checkErrors(json, messageLabel) {
+    var errs = errors(json)
+    if (errs.length > 0) {
+        messageLabel.text = errorDescriptions(json)
+        return true
+    } else {
+        return false
+    }
+}

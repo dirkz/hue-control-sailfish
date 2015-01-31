@@ -15,16 +15,6 @@ Page {
         refreshLightState()
     }
 
-    function checkErrors(json) {
-        var errors = Hue.errors(json)
-        if (errors.length > 0) {
-            messageLabel.text = Hue.errorDescriptions(json)
-            return true
-        } else {
-            return false
-        }
-    }
-
     function failure(error) {
         messageLabel.text = error.message
         console.log(error.message)
@@ -33,7 +23,7 @@ Page {
     function successStateFunction(stateName) {
         var name = stateName
         return function (state) {
-            if (!checkErrors(state)) {
+            if (!Hue.checkErrors(state, messageLabel)) {
                 var newLight = light
                 if (name) {
                     var newState = Hue.extractSingleStateValue(

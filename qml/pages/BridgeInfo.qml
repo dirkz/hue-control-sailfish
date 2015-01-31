@@ -16,21 +16,9 @@ Page {
     property var user
     property bool registered: false
 
-    function checkErrors(json) {
-        var errors = Hue.errors(json)
-        if (errors.length > 0) {
-            messageLabel.text = Hue.errorDescriptions(json)
-            registered = false
-            return true
-        } else {
-            registered = true
-            return false
-        }
-    }
-
     function registerBridge() {
         var success = function (result) {
-            var ok = checkErrors(result)
+            Hue.checkErrors(result, messageLabel)
         }
         var fail = function (error) {
             registered = false
@@ -41,7 +29,8 @@ Page {
 
     function checkRegistrationStatus() {
         var success = function (lights) {
-            checkErrors(lights)
+            var failed = Hue.checkErrors(lights, messageLabel)
+            registered = !failed
         }
         var fail = function (error) {
             registered = false
