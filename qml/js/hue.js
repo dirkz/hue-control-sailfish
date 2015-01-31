@@ -13,7 +13,7 @@ function errorDescriptions(json) {
 }
 
 function lightsList(json) {
-    var buildLight = function (key) {
+    var buildLight = function(key) {
         var obj = json[key]
         obj.lightId = key
         return obj
@@ -25,7 +25,7 @@ function lightsList(json) {
 }
 
 function flat1(objs) {
-    var r = _.reduce(objs, function (acc, ary) {
+    var r = _.reduce(objs, function(acc, ary) {
         return acc.concat(ary)
     }, [])
     return r

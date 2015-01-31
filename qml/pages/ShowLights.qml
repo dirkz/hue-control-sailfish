@@ -21,17 +21,17 @@ Page {
     }
 
     function fetchLights() {
-        var success = function(lights) {
+        var success = function (lights) {
             console.log("lights", JSON.stringify(lights))
             if (!checkErrors(lights)) {
                 listModel.clear()
                 var list = Hue.lightsList(lights)
                 list.forEach(function (l) {
                     listModel.append(l)
-                });
+                })
             }
         }
-        var fail = function(error) {
+        var fail = function (error) {
             messageLabel.text = error.message
         }
         user.getLights(success, fail)
@@ -52,7 +52,9 @@ Page {
             id: listModel
         }
 
-        header: PageHeader { title: qsTr("Lights") }
+        header: PageHeader {
+            title: qsTr("Lights")
+        }
 
         ViewPlaceholder {
             enabled: listView.count == 0
@@ -68,7 +70,10 @@ Page {
                 anchors.verticalCenter: parent.verticalCenter
                 text: model.name
             }
-            onClicked: pageStack.push(Qt.resolvedUrl("LightDetail.qml"), { user: user, light: model })
+            onClicked: pageStack.push(Qt.resolvedUrl("LightDetail.qml"), {
+                                          user: user,
+                                          light: { lightId: model.lightId }
+                                      })
         }
 
         PullDownMenu {

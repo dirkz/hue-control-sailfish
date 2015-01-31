@@ -35,6 +35,6 @@ import "pages"
 
 ApplicationWindow
 {
-    initialPage: Component { LightDetail { } }
+    initialPage: Component { ShowBridges { } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
 }

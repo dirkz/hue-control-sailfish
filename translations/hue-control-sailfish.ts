@@ -38,10 +38,6 @@
 <context>
     <name>LightDetail</name>
     <message>
-        <source>Refresh</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>On</source>
         <translation type="unfinished"></translation>
     </message>
@@ -51,6 +47,22 @@
     </message>
     <message>
         <source>Light off/on</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh State</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>reachable: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> alert: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> effect: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
