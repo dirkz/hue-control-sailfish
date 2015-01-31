@@ -30,10 +30,10 @@ Page {
     }
 
     function registerBridge() {
-        var success = function(result) {
+        var success = function (result) {
             var ok = checkErrors(result)
         }
-        var fail = function(error) {
+        var fail = function (error) {
             registered = false
             messageLabel.text = error.message
         }
@@ -41,10 +41,10 @@ Page {
     }
 
     function checkRegistrationStatus() {
-        var success = function(lights) {
+        var success = function (lights) {
             checkErrors(lights)
         }
-        var fail = function(error) {
+        var fail = function (error) {
             registered = false
             messageLabel.text = error.message
         }
@@ -54,7 +54,8 @@ Page {
     BridgeUserModel {
         id: bridgeUserModel
         Component.onCompleted: {
-            user = hue.bridge(bridge.internalipaddress).user(bridgeUserModel.userName)
+            user = hue.bridge(bridge.internalipaddress).user(
+                        bridgeUserModel.userName)
             checkRegistrationStatus()
         }
     }
@@ -108,7 +109,9 @@ Page {
                 MenuItem {
                     text: qsTr("Lights")
                     onClicked: pageStack.push(Qt.resolvedUrl("ShowLights.qml"),
-                                              {user: user})
+                                              {
+                                                  user: user
+                                              })
                     enabled: registered
                 }
             }
@@ -117,12 +120,12 @@ Page {
                 id: pushUpMenu
                 MenuItem {
                     text: qsTr("Register")
-                    onClicked: registerBridge();
+                    onClicked: registerBridge()
                     enabled: !registered
                 }
                 MenuItem {
                     text: qsTr("Update Registration Status")
-                    onClicked: checkRegistrationStatus();
+                    onClicked: checkRegistrationStatus()
                 }
             }
         }
