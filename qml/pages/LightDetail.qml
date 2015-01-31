@@ -15,7 +15,7 @@ Page {
         var hue = JsHue.jsHue()
         user = hue.bridge('192.168.178.49').user('4940041b010273f7566238109b343bd280')
         light = {
-            lightId: "3",
+            lightId: "2",
             state: {
                 on: false,
                 bri: 0,
@@ -74,13 +74,17 @@ Page {
         user.getLight(lightId, success, failure)
     }
 
+    function lightStateUrl(lightId, propName) {
+        return "/lights/" + lightId + "/state/" + propName
+    }
+
     function lightToggle() {
         var success = function(state) {
             console.log("state ", JSON.stringify(state))
             if (!checkErrors(state)) {
                 var newLight = light;
-                var obj = Hue.extractSingleStateValue(state, 'on');
-                newLight.state.on = !light.state.on
+                var newState = Hue.extractSingleStateValue(state, lightStateUrl(light.lightId, "on"));
+                newLight.state.on = newState
                 light = newLight
             }
         }
