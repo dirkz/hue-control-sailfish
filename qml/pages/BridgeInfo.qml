@@ -39,6 +39,12 @@ Page {
         user.getLights(success, fail)
     }
 
+    function showLights() {
+        pageStack.push(Qt.resolvedUrl("ShowLights.qml"), {
+                           user: user
+                       })
+    }
+
     BridgeUserModel {
         id: bridgeUserModel
         Component.onCompleted: {
@@ -84,6 +90,12 @@ Page {
                                                       "Not registered"))
             }
 
+            Button {
+                text: qsTr("Lights")
+                onClicked: showLights()
+                enabled: registered
+            }
+
             Label {
                 id: messageLabel
                 color: Theme.highlightColor
@@ -93,10 +105,7 @@ Page {
                 id: pullDownMenu
                 MenuItem {
                     text: qsTr("Lights")
-                    onClicked: pageStack.push(Qt.resolvedUrl("ShowLights.qml"),
-                                              {
-                                                  user: user
-                                              })
+                    onClicked: showLights()
                     enabled: registered
                 }
             }

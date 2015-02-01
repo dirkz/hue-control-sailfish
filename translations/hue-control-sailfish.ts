@@ -58,11 +58,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> alert: </source>
+        <source> effect: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source> effect: </source>
+        <source>alert: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

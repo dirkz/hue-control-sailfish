@@ -9,7 +9,7 @@ Page {
 
     property var user
     property variant light
-    property bool manualRefresh: false
+    property bool changeTriggeredByUser: true
 
     Component.onCompleted: {
         refreshLightState()
@@ -24,6 +24,9 @@ Page {
         var name = stateName
         return function (state) {
             if (!Hue.checkErrors(state, messageLabel)) {
+                console.log("state", JSON.stringify(state))
+                changeTriggeredByUser = false
+                messageLabel.text = ""
                 var newLight = light
                 if (name) {
                     var newState = Hue.extractSingleStateValue(
@@ -32,10 +35,9 @@ Page {
                     light = newLight
                 } else {
                     state.lightId = newLight.lightId
-                    manualRefresh = true
                     light = state
-                    manualRefresh = false
                 }
+                changeTriggeredByUser = true
             }
         }
     }
@@ -58,7 +60,7 @@ Page {
     }
 
     function sliderUpdateFunction(slider, name) {
-        if (!manualRefresh) {
+        if (changeTriggeredByUser) {
             var success = successStateFunction(name)
             var obj = {
 
@@ -84,8 +86,11 @@ Page {
             x: Theme.paddingSmall
 
             Label {
-                text: qsTr("reachable: ") + light.state.reachable + qsTr(
-                          " alert: ") + light.state.alert + qsTr(
+                text: qsTr("reachable: ") + light.state.reachable
+            }
+
+            Label {
+                text: qsTr("alert: ") + light.state.alert + qsTr(
                           " effect: ") + light.state.effect
             }
 
