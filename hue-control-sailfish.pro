@@ -15,7 +15,8 @@ TARGET = hue-control-sailfish
 CONFIG += sailfishapp
 
 SOURCES += src/hue-control-sailfish.cpp \
-    src/bridgeusermodel.cpp
+    src/bridgeusermodel.cpp \
+    src/lightstate.cpp
 
 OTHER_FILES += qml/hue-control-sailfish.qml \
     qml/cover/CoverPage.qml \
@@ -39,5 +40,6 @@ CONFIG += sailfishapp_i18n
 TRANSLATIONS += translations/hue-control-sailfish-de.ts
 
 HEADERS += \
-    src/bridgeusermodel.h
+    src/bridgeusermodel.h \
+    src/lightstate.h
 
