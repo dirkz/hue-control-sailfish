@@ -9,32 +9,32 @@ Page {
 
     property var hue: JsHue.jsHue()
 
+    property string noBridgesFound: qsTr("No bridges found")
+
     function discoverBridges() {
         hue.discover(function (bridges) {
             listModel.clear()
             if (bridges.length === 0) {
-                messageLabel.text = Hue.encloseTag("b",
-                                                   qsTr("No bridges found"))
+                viewPlaceHolder.text = noBridgesFound
             } else {
                 bridges.forEach(function (b) {
                     listModel.append(b)
                 })
             }
         }, function (error) {
-            messageLabel.text = Hue.encloseTag("b", error.message)
+            if (error.message && error.message.length > 0) {
+                viewPlaceHolder.text = error.message
+            } else {
+                viewPlaceHolder.text = noBridgesFound
+            }
         })
     }
 
     Component.onCompleted: discoverBridges()
 
-    Label {
-        id: messageLabel
-    }
-
     SilicaListView {
         id: listView
         anchors.fill: parent
-        anchors.top: messageLabel.bottom
 
         model: ListModel {
             id: listModel
@@ -48,6 +48,7 @@ Page {
             enabled: listView.count == 0
             text: qsTr("No bridges")
             hintText: qsTr("Pull down to add bridges")
+            id: viewPlaceHolder
         }
 
         delegate: ListItem {

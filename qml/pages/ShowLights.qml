@@ -12,7 +12,7 @@ Page {
     function checkErrors(json) {
         var errors = Hue.errors(json)
         if (errors.length > 0) {
-            messageLabel.text = Hue.errorDescriptions(json)
+            lightsPlaceHolder.text = Hue.errorDescriptions(json)
             return true
         } else {
             return false
@@ -30,21 +30,16 @@ Page {
             }
         }
         var fail = function (error) {
-            messageLabel.text = error.message
+            lightsPlaceHolder.text = error.message
         }
         user.getLights(success, fail)
     }
 
     Component.onCompleted: fetchLights()
 
-    Label {
-        id: messageLabel
-    }
-
     SilicaListView {
         id: listView
         anchors.fill: parent
-        anchors.top: messageLabel.bottom
 
         model: ListModel {
             id: listModel
@@ -55,6 +50,7 @@ Page {
         }
 
         ViewPlaceholder {
+            id: lightsPlaceHolder
             enabled: listView.count == 0
             text: qsTr("No lights loaded")
             hintText: qsTr("Pull down to refresh")

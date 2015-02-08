@@ -27,6 +27,10 @@
         <source>Not registered</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Show Lights</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CoverPage</name>

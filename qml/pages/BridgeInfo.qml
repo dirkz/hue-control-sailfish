@@ -67,7 +67,7 @@ Page {
             width: parent.width
             anchors.top: pageHeader.bottom
             spacing: 20
-            anchors.leftMargin: 10
+            anchors.margins: Theme.paddingSmall
             x: Theme.paddingLarge
 
             Label {
@@ -79,9 +79,6 @@ Page {
             Label {
                 text: "Id: " + bridge.id
             }
-            Label {
-                text: "Mac: " + bridge.macaddress
-            }
 
             Label {
                 id: registrationStatusLabel
@@ -91,7 +88,7 @@ Page {
             }
 
             Button {
-                text: qsTr("Lights")
+                text: qsTr("Show Lights")
                 onClicked: showLights()
                 enabled: registered
             }

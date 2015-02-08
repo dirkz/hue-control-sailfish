@@ -81,9 +81,10 @@ Page {
             id: columnContents
             width: parent.width
             anchors.top: pageHeader.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
             spacing: 10
-            anchors.leftMargin: 10
-            x: Theme.paddingSmall
+            anchors.margins: Theme.paddingSmall
 
             Label {
                 text: qsTr("reachable: ") + light.state.reachable
